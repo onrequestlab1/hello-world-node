@@ -3,10 +3,10 @@ const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-const revision = 5;
+const revision = 6;
 // Reply with "hello worlds" for any request
 app.use((req, res) => {
-  res.json({ message: "hello worlds", revision: revision });
+  res.json({ message: "hello worlds", revision: revision , cicdWorking: true});
 });
 
 app.listen(PORT, () => {
