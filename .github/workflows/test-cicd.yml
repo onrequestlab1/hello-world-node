@@ -12,6 +12,7 @@ env:
   IMAGE_NAME: hello-world-node
   RESOURCE_GROUP: DefaultResourceGroup-WUS2
   CONTAINER_APP_NAME: hello-world-node
+  ACR_USERNAME: ${{ vars.ACR_USERNAME }}
 
 jobs:
   build-and-deploy:
@@ -27,8 +28,11 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Login to Azure Container Registry
-        run: az acr login --name $ACR_NAME
+      - name: Docker login to Azure Container Registry
+        run: |
+          echo "${{ secrets.ACR_PASSWORD }}" | docker login $ACR_LOGIN_SERVER \
+            --username "${{ env.ACR_USERNAME }}" \
+            --password-stdin
 
       - name: Build Docker image
         run: |
